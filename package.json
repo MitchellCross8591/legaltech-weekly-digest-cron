@@ -1,0 +1,5 @@
+{
+  "name": "legaltech-weekly-digest-cron",
+  "private": true,
+  "scripts": {"test": "node --experimental-strip-types test/digest.test.ts", "start": "node --experimental-strip-types src/digest.ts"}
+}
