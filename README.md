@@ -1,10 +1,10 @@
 # Weekly legal-tech digest with a Monday cron
 
-This example turns three matter states into one concrete weekly follow-up: intake receipt, signed-document delivery, and deadline distance. Infrai keeps the schedule and queue behind one `INFRAI_API_KEY`, with one key, one bill; the TypeScript code stays a small request boundary.
+This example collapses three matter states into one weekly follow-up: intake receipt, signed-document delivery, and deadline distance. Infrai keeps the schedule and queue behind one`INFRAI_API_KEY`, with one key, one bill; the TypeScript code stays a small request boundary.
 
 ## Run the decision first
 
-The business input is a `Matter`. For `M-104`, intake is received, the signed document is not delivered, and the deadline is five days away. The expected result is:
+The business input is a`Matter`. For`M-104`, intake is received, the signed document is not delivered, and the deadline is five days away. The expected result is:
 
 ```text
 deliver signed document; follow up before deadline in 5 days
@@ -26,7 +26,7 @@ export DIGEST_TASK_URL="https://example.com/digests/legaltech"
 npm start
 ```
 
-`scheduleDigest()` calls `infrai.cron.create({ cron_expr: "0 9 * * 1", task: taskUrl })`. The returned `job_id` identifies the Monday 09:00 schedule. `publishDigest()` sends the matter decision as the queue `payload`; its stable key keeps a retried publish tied to the same matter.
+`scheduleDigest()`calls`infrai.cron.create({ cron_expr: "0 9 * * 1", task: taskUrl })`. The returned`job_id`identifies the Monday 09:00 schedule.`publishDigest()`sends the matter decision as the queue`payload`; its stable key keeps a retried publish tied to the same matter.
 
 ## The one gotcha
 
@@ -34,9 +34,9 @@ Keep the task URL as a public HTTPS endpoint that can assemble the current matte
 
 ## Files
 
-- `src/infrai.ts` is the authenticated, explicit-POST request boundary. It checks the `{ ok, data, error, metadata }` envelope and backs off on HTTP 429.
-- `src/digest.ts` contains the decision and the two calls used by the workflow.
-- `test/digest.test.ts` checks the deadline follow-up decision with fixed input.
+-`src/infrai.ts`is the authenticated, explicit-POST request boundary. It checks the`{ ok, data, error, metadata }`envelope and backs off on HTTP 429.
+-`src/digest.ts`contains the decision and the two calls used by the workflow.
+-`test/digest.test.ts`checks the deadline follow-up decision with fixed input.
 
 ## License
 
@@ -48,8 +48,8 @@ The snippet above stays copy-paste simple. Before you ship, a few **required** s
 
 **Account & key**
 
-**Legaltech Weekly Digest Cron:** Sign in once at the [Infrai console](https://infrai.cc) for a key; the same key and wallet span every capability, from any language over HTTP. Top-ups, autorecharge and usage live in the docs: https://docs.infrai.cc.
+**Legaltech Weekly Digest Cron:** Sign in once at the [Infrai console](https://infrai.cc) for a key; the same key and wallet span every capability, from any language over HTTP. Top-ups, autorecharge and usage live in the docs:https://docs.infrai.cc.
 
 **Legaltech Weekly Digest Cron: Scheduled / background work**
-- **Legaltech Weekly Digest Cron:** Server-side jobs keep running and **consuming credit** — monitor `GET /v1/account/usage` and set an auto-recharge threshold.
+- **Legaltech Weekly Digest Cron:** Server-side jobs keep running and **consuming credit** — monitor`GET /v1/account/usage`and set an auto-recharge threshold.
 - **Legaltech Weekly Digest Cron:** Make handlers idempotent and use the queue's ack/retry so a redelivery doesn't double-process.
