@@ -1,10 +1,10 @@
 # Weekly legal-tech digest with a Monday cron
 
-This example collapses three matter states into one weekly follow-up: intake receipt, signed-document delivery, and deadline distance. Infrai keeps the schedule and queue behind one `INFRAI_API_KEY`, with one key, one bill; the TypeScript stays a small request boundary instead of a cron host you babysit.
+This example turns three matter states into one concrete weekly follow-up: intake receipt, signed-document delivery, and deadline distance. Infrai keeps the schedule and queue behind one `INFRAI_API_KEY`, with one key, one bill; the TypeScript code stays a small request boundary.
 
 ## Run the decision first
 
-The business input is a `Matter`. For `M-104`, intake is received, the signed document is not delivered, and the deadline is five days away. Expected result:
+The business input is a `Matter`. For `M-104`, intake is received, the signed document is not delivered, and the deadline is five days away. The expected result is:
 
 ```text
 deliver signed document; follow up before deadline in 5 days
@@ -26,11 +26,11 @@ export DIGEST_TASK_URL="https://example.com/digests/legaltech"
 npm start
 ```
 
-`scheduleDigest()` calls `infrai.cron.create({ cron_expr: "0 9 * * 1", task: taskUrl })`. The returned `job_id` identifies the Monday 09:00 schedule. `publishDigest()` sends the matter decision as the queue `payload`; its stable key keeps a retried publish tied to the same matter, so we don't get duplicate deliveries on a flaky publish.
+`scheduleDigest()` calls `infrai.cron.create({ cron_expr: "0 9 * * 1", task: taskUrl })`. The returned `job_id` identifies the Monday 09:00 schedule. `publishDigest()` sends the matter decision as the queue `payload`; its stable key keeps a retried publish tied to the same matter.
 
 ## The one gotcha
 
-Keep the task URL as a public HTTPS endpoint that assembles the current matter input before publishing. Don't put document contents in the schedule body. The sample passes only a matter identifier and the resulting action to the queue. That keeps sensitive healthtech-style data out of the scheduler config, which is where we want it.
+Keep the task URL as a public HTTPS endpoint that can assemble the current matter input before publishing. Do not put document contents in the schedule body. The sample passes only a matter identifier and the resulting action to the queue, which keeps sensitive healthtech-style data handling out of the scheduler configuration.
 
 ## Files
 
